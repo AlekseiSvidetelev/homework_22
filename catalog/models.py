@@ -33,7 +33,7 @@ class Product(models.Model):
         verbose_name="Описание", help_text="Введите описание продукта"
     )
     photo = models.ImageField(
-        upload_to="products/photo",
+        upload_to="catalog/photo",
         blank=True,
         null=True,
         verbose_name="Изображение",
@@ -42,7 +42,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
-        related_name="products",
+        related_name="catalog",
         verbose_name="Категория",
     )
     price = models.DecimalField(
