@@ -33,7 +33,7 @@ class Product(models.Model):
         verbose_name="Описание", help_text="Введите описание продукта"
     )
     photo = models.ImageField(
-        upload_to="products/photo",
+        upload_to="catalog/photo",
         blank=True,
         null=True,
         verbose_name="Изображение",
@@ -42,7 +42,7 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
-        related_name="products",
+        related_name="catalog",
         verbose_name="Категория",
     )
     price = models.DecimalField(
@@ -52,6 +52,11 @@ class Product(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
     )
+    views_count = models.PositiveIntegerField(
+        help_text="Укажите количество просмотров",
+        default=0,
+        verbose_name="Количество просмотров",
+    )
 
     class Meta:
         verbose_name = "Продукт"
@@ -60,6 +65,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# Create your models here.

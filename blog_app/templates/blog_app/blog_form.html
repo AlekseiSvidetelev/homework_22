@@ -1,0 +1,29 @@
+{% extends 'blog_app/blog.html' %}
+
+{% block container %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <form class="row" method="post" enctype="multipart/form-data">
+        <div class="card">
+          <div class="card-body">
+            {% csrf_token %}
+            {{ form.as_p }}
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">
+            {% if blog.id %}
+            Сохранить
+            {% else %}
+            Создать
+            {% endif %}
+          </button>
+          <button type="submit" class="btn btn-primary mt-3">
+            <a class="btn btn-primary" href="{% url 'blog_app:blog' %}" role="button">Назад</a>
+
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

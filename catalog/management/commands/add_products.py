@@ -3,7 +3,7 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
-    help = "Add test categories and products to the database."
+    help = "Add test categories and catalog to the database."
 
     def handle(self, *args, **options):
 
