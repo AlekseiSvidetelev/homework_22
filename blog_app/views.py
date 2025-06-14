@@ -32,6 +32,9 @@ class BlogPostCreateView(CreateView):
     fields = ["title", "content", "preview", "is_published"]
     success_url = reverse_lazy("blog_app:blog")
 
+    def get_queryset(self):
+        return Blog.objects.filter(is_published=True)
+
 
 class BlogPostUpdateView(UpdateView):
     model = Blog
