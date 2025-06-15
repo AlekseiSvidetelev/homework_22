@@ -1,24 +1,26 @@
 {% extends 'catalog/base.html' %}
 {% block container %}
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <form class="row" method="post" enctype="multipart/form-data">
-        <div class="card">
-            <p class="card-text">Вы уверены, что хотите удалить {{object.name}}?</p>
-          <div class="card-body">
-            {% csrf_token %}
-            {{ form.as_p }}
-          </div>
-          <button type="submit" class="btn btn-primary mt-3">
-            Удалить
-          </button>
-          <button type="submit" class="btn btn-primary mt-3">
-            <a class="btn btn-primary" href="{% url 'catalog:base' %}" role="button">Отмена</a>
-          </button>
+    <div class="row">
+        <div class="col">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <p class="card-text" style="font-weight: bold; color: red;">Вы уверены, что хотите удалить?</p>
+                    <p class="card-text">Название: {{object.name}}</p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <p class="card-text">Описание: {{object.description|truncatechars:200}}?</p>
+                    <button type="submit" class="btn btn-lg btn-danger mt-3">
+                        Удалить
+                    </button>
+                    <button type="submit" class="btn btn-primary mt-3">
+                        <a class="btn btn-primary" href="{% url 'catalog:product_details' object.id %}" role="button">Отмена</a>
+                    </button>
+                </div>
+            </form>
         </div>
-      </form>
     </div>
-  </div>
 </div>
 {% endblock %}
