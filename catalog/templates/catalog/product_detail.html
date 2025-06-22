@@ -2,47 +2,53 @@
 {% load my_tags %}
 {% block container %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="text-center">
-                    <img src="{{ object.photo | media_filter }}" class="img-fluid" style="max-height: 300px; margin: auto;">
-                </div>
-                <div class="card-body">
-                    <p class="card-text"> {{ object.name }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'catalog:base' %}" role="button">Назад</a>
-                            <a class="btn btn-primary me-2" href="{% url 'catalog:product_update' object.id %}" role="button">Редактировать</a>
-                            <a class="btn btn-primary me-2" href="{% url 'catalog:product_delete' object.id %}" role="button">Удалить</a>
-                        </div> <small class="text-body-secondary"></small> </div>
-                </div>
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="text-center">
+                <img src="{{ object.photo | media_filter }}" class="img-fluid" style="max-height: 300px; margin: auto;">
             </div>
-        </div>
-
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <p class="card-text"> {{ object.description }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                        </div> <small class="text-body-secondary"></small> </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <p class="card-text"> {{ object.price }}</p>
-                            <p class="card-text">  руб. </p>
-                        </div> <small class="text-body-secondary"></small> </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="#" role="button">Добавить в корзину</a>
-                        </div> <small class="text-body-secondary"></small> </div>
-                </div>
+            <div class="card-body">
+                <p class="card-text"> {{ object.name }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="{% url 'catalog:base' %}" role="button">Назад</a>
+                        <a class="btn btn-primary me-2" href="{% url 'catalog:product_update' object.id %}"
+                           role="button">Редактировать</a>
+                        <a class="btn btn-primary me-2" href="{% url 'catalog:product_delete' object.id %}"
+                           role="button">Удалить</a>
+                    </div>
+                    <small class="text-body-secondary"></small></div>
             </div>
         </div>
     </div>
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text"> {{ object.description }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                    </div>
+                    <small class="text-body-secondary"></small></div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <p class="card-text"> {{ object.price }}</p>
+                        <p class="card-text"> руб. </p>
+                    </div>
+                    <small class="text-body-secondary"></small></div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="#" role="button">Добавить в корзину</a>
+                    </div>
+                    <small class="text-body-secondary"></small></div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

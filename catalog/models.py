@@ -1,5 +1,4 @@
 from django.db import models
-from unicodedata import category
 
 
 class Category(models.Model):
@@ -27,17 +26,15 @@ class Product(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name="Наименование",
-        help_text="Введите наименование продукта",
     )
     description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание продукта"
+        verbose_name="Описание",
     )
     photo = models.ImageField(
         upload_to="catalog/photo",
         blank=True,
         null=True,
         verbose_name="Изображение",
-        help_text="Загрузите изображение продукта",
     )
     category = models.ForeignKey(
         Category,
@@ -64,4 +61,5 @@ class Product(models.Model):
         ordering = ["category", "price"]
 
     def __str__(self):
+        """Возвращает наименование товара"""
         return self.name

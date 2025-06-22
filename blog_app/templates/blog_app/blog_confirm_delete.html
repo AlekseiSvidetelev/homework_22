@@ -1,24 +1,24 @@
 {% extends 'blog_app/blog.html' %}
 {% block container %}
 <div class="container">
-  <div class="row">
-    <div class="col">
-      <form class="row" method="post" enctype="multipart/form-data">
-        <div class="card">
-            <p class="card-text">Вы уверены, что хотите удалить {{object.name}}?</p>
-          <div class="card-body">
-            {% csrf_token %}
-            {{ form.as_p }}
-          </div>
-          <button type="submit" class="btn btn-primary mt-3">
-            Удалить
-          </button>
-          <button type="submit" class="btn btn-primary mt-3">
-            <a class="btn btn-primary" href="{% url 'blog_app:blog' %}" role="button">Отмена</a>
-          </button>
+    <div class="row">
+        <div class="col">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <p class="card-text">Вы уверены, что хотите удалить {{object.name}}?</p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">
+                        Удалить
+                    </button>
+                    <button type="submit" class="btn btn-primary mt-3">
+                        <a class="btn btn-primary" href="{% url 'blog_app:blog' %}" role="button">Отмена</a>
+                    </button>
+                </div>
+            </form>
         </div>
-      </form>
     </div>
-  </div>
 </div>
 {% endblock %}
