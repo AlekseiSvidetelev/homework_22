@@ -4,15 +4,20 @@ from django.forms import ModelForm, BooleanField
 from catalog.models import Category, Product
 from catalog.constants import FORBIDDEN_WORDS
 
+
 class StyleFormMixin:
     """Класс для задания стилей формам."""
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field, in self.fields.items():
+        for (
+            field_name,
+            field,
+        ) in self.fields.items():
             if isinstance(field, BooleanField):
-                field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs["class"] = "form-check-input"
             else:
-                field.widget.attrs['class'] = 'form-control'
+                field.widget.attrs["class"] = "form-control"
 
 
 class CategoryForm(ModelForm):
@@ -29,7 +34,6 @@ class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
         exclude = ("views_count",)
-
 
     def clean_price(self):
         """Функция для валидации цены товара."""
