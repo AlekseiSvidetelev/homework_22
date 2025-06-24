@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 
-from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
+from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT, LOGIN_REDIRECT_URL
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'blog_app',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = '/catalog/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('PASSWORD_EMAIL_USER')
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LOGIN_URL = '/users/login'
