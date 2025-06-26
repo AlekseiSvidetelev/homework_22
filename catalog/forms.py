@@ -1,8 +1,23 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import ModelForm, BooleanField
 
 from catalog.models import Category, Product
 from catalog.constants import FORBIDDEN_WORDS
+
+
+class StyleFormMixin:
+    """Класс для задания стилей формам."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for (
+            field_name,
+            field,
+        ) in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs["class"] = "form-check-input"
+            else:
+                field.widget.attrs["class"] = "form-control"
 
 
 class CategoryForm(ModelForm):
@@ -13,32 +28,12 @@ class CategoryForm(ModelForm):
         fields = "__all__"
 
 
-class ProductForm(ModelForm):
+class ProductForm(StyleFormMixin, ModelForm):
     """Форма для создания товара."""
 
     class Meta:
         model = Product
         exclude = ("views_count",)
-
-    def __init__(self, *args, **kwargs):
-        """Функция для задания формы создания товара."""
-        super(ProductForm, self).__init__(*args, **kwargs)
-        self.fields["name"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Название товара"}
-        )
-        self.fields["description"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Описание товара"}
-        )
-        self.fields["price"].widget.attrs.update(
-            {"class": "form-control", "placeholder": "Цена товара"}
-        )
-        self.fields["category"].widget.attrs.update({"class": "form-control"})
-        self.fields["photo"].widget.attrs.update(
-            {
-                "class": "form-control",
-                "placeholder": "Размер не должен превышать 5 МБ. Формат файла: .jpg или .png",
-            }
-        )
 
     def clean_price(self):
         """Функция для валидации цены товара."""
