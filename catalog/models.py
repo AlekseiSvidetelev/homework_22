@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Category(models.Model):
     """Категория товара"""
@@ -15,6 +17,11 @@ class Category(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
+        permissions = [
+            ("can_edit_category", "Может редактировать категории"),
+            ("can_delete_category", "Может удалять категории"),
+            ("can_add_category", "Может добавлять категории"),
+        ]
 
     def __str__(self):
         return self.name
@@ -54,11 +61,18 @@ class Product(models.Model):
         default=0,
         verbose_name="Количество просмотров",
     )
+    is_published = models.BooleanField(default=False, verbose_name="Опубликован")
+    owner = models.ForeignKey(User, verbose_name="Владелец", on_delete=models.CASCADE, blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["category", "price"]
+        permissions = [
+            ("can_unpublish_product", "Может снимать продукт с публикации"),
+            ("can_delete_product", "Может удалять продукты"),
+        ]
 
     def __str__(self):
         """Возвращает наименование товара"""

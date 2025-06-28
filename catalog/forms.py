@@ -33,6 +33,7 @@ class ProductForm(StyleFormMixin, ModelForm):
 
     class Meta:
         model = Product
+        fields = ['name', 'price', 'description', 'photo', 'category']
         exclude = ("views_count",)
 
     def clean_price(self):
@@ -68,3 +69,9 @@ class ProductForm(StyleFormMixin, ModelForm):
             raise ValidationError("Формат файла изображения должен быть .jpg или .png.")
         else:
             return photo
+
+
+class ProductModeratorForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('description', 'is_published')
