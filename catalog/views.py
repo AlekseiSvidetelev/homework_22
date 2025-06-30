@@ -10,14 +10,23 @@ from django.views.generic import (
     DeleteView,
 )
 
-from catalog.models import Product
+from catalog.models import Product, Category
 from catalog.forms import ProductForm, ProductModeratorForm
+from catalog.services import get_products_cache, get_products_by_category
 
 
 class ProductsListView(ListView):
     """Вывод списка продуктов."""
 
     model = Product
+
+    def get_queryset(self):
+        return get_products_cache()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 class ProductsDetailView(LoginRequiredMixin, DetailView):
@@ -57,13 +66,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("catalog:product_details", args={self.kwargs.get("pk")})
 
     def get_form_class(self):
-        """ Изменение формы в зависимости от прав пользователя."""
+        """Изменение формы в зависимости от прав пользователя."""
         user = self.request.user
         if user == self.object.owner:
             return ProductForm
-        if user.has_perm("can_unpublish_product") and user.has_perm("can_delete_product"):
+        if user.has_perm("can_unpublish_product") and user.has_perm(
+            "can_delete_product"
+        ):
             return ProductModeratorForm
         raise PermissionDenied
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Удаление существующего продукта."""
@@ -79,3 +91,24 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
             return True
         else:
             raise PermissionDenied
+
+
+class CategoryProductsView(ListView):
+    """Отображение списка продуктов по категории."""
+
+    model = Product
+    template_name = "catalog/category_products.html"
+    success_url = reverse_lazy("catalog:base")
+
+    def get_queryset(self):
+        """Получение списка продуктов по категории."""
+        category_id = self.kwargs.get("category_id")
+        return get_products_by_category(category_id)
+
+    def get_context_data(self, **kwargs):
+        """Добавление категории в контекст."""
+        context = super().get_context_data(**kwargs)
+        category_id = self.kwargs.get("category_id")
+        category = Category.objects.get(pk=category_id)
+        context["category"] = category
+        return context
