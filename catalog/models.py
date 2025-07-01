@@ -62,8 +62,9 @@ class Product(models.Model):
         verbose_name="Количество просмотров",
     )
     is_published = models.BooleanField(default=False, verbose_name="Опубликован")
-    owner = models.ForeignKey(User, verbose_name="Владелец", on_delete=models.CASCADE, blank=True, null=True)
-
+    owner = models.ForeignKey(
+        User, verbose_name="Владелец", on_delete=models.CASCADE, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Продукт"

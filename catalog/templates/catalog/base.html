@@ -179,6 +179,25 @@
             </div>
         </div>
     </section>
+{% if request.path == '/catalog/' %}
+    <section>
+        <div class="col-3">
+            <ul class="list-group my-2">
+                <li class="list-group-item active">Выберите категорию:</li>
+                {% for category in categories %}
+                <li class="list-group-item">
+                    <a href="{% url 'catalog:category_list' category.id %}" class="text-decoration-none stretched-link">{{ category.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% else %}
+    <div class="col-3 text-center my-2">
+        <h4>Выбранная категория: {{ category.name }}</h4>
+    </div>
+{% endif %}
+
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
 

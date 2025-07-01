@@ -33,7 +33,7 @@ class ProductForm(StyleFormMixin, ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'price', 'description', 'photo', 'category']
+        fields = ["name", "price", "description", "photo", "category"]
         exclude = ("views_count",)
 
     def clean_price(self):
@@ -74,4 +74,4 @@ class ProductForm(StyleFormMixin, ModelForm):
 class ProductModeratorForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
-        fields = ('description', 'is_published')
+        fields = ("description", "is_published")
